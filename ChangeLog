@@ -1,3 +1,11 @@
+2016-03-25
+
+	* Makefile.am:
+	* configure.ac: Hook am__tar and set GZIP_ENV so that "make
+	dist" will create a reproducible tarball from the git source,
+	including a new "source_date_epoch" file that contains the
+	source (*not build*) timestamp based on the git commit timestamp.
+
 2016-03-07
 
 	* tests/regression/client/Makefile.am:

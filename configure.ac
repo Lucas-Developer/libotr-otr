@@ -28,6 +28,13 @@ AC_SUBST(LIBOTR_LIBTOOL_VERSION)
 AC_PROG_CC
 LT_INIT
 
+dnl Cause "make dist" to create a reproducible tarball (coupled with
+dnl setting GZIP_ENV in Makefile.am).  Note that this relies on the
+dnl file source_date_epoch existing, which is created by a rule in
+dnl Makefile.am.  That file is included in the tarball, so it will be
+dnl created before this command is run.
+AC_SUBST([am__tar],['( export SOURCE_DATE_EPOCH=`tr -cd 0-9 < source_date_epoch`; chmod -R u=rwX,go=rX "$$tardir"; find "$$tardir" -exec touch -d @$${SOURCE_DATE_EPOCH} {} \; -print0 | LC_ALL=C sort -z | $${TAR-tar} --owner=root --group=root --numeric-owner --no-recursion --null -T - -chf - )'])
+
 AM_PATH_LIBGCRYPT(1:1.2.0,,AC_MSG_ERROR(libgcrypt 1.2.0 or newer is required.))
 
 AC_CANONICAL_HOST
