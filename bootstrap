@@ -7,3 +7,11 @@ if [ ! -e config ]; then
 fi
 
 autoreconf -i
+
+# The first time you run autoreconf (which runs automake), automake will
+# not find config/depconf (because it doesn't exist yet), and will not
+# put it into DIST_COMMON in Makefile.in.  So if it's not in there, run
+# autoreconf again
+if ! grep -q config/depcomp Makefile.in; then
+    autoreconf -i
+fi
